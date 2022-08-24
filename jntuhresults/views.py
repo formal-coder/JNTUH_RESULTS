@@ -21,8 +21,7 @@ lolli=list(a_dic.keys())
 #index request
 def index(request):
     return render(request,'index.html',{'a_dic':a_dic})
-
-
+    
 def MultiRollNumber(request):
     if(request.method == 'GET'):
         return redirect('/')
@@ -33,12 +32,13 @@ def MultiRollNumber(request):
     last=air["last"]
     roll=air["firsti"]
     code=air["code"]
-    print(code)
     firsti=lolli.index(first)
     lasti=lolli.index(last)
-    dict=lolli[firsti:lasti]
-    print(dict)
-    if(last<=first):
+    dict=lolli[firsti:lasti+1]
+    roll_first=roll+first
+    roll_last=roll+last
+    print("Results from",roll_first," to",roll_last)
+    if(last<first):
             return HttpResponse("Enter the valid details")
     return render(request,'MultiRollNumber.html',{'roll':roll,'dict':dict,'code':code})
 
@@ -48,12 +48,13 @@ def SingleRollNumber(request):
         return redirect('/')
     air=request.POST.dict()
     roll=air["roll"]
+    print(roll)
     return render(request,'SingleRollNumber.html',{'roll':roll})
 
 #snippet of code
 def gettingurl(request,htno,code):
     deta={}
-    deta=Search_by_Roll_number.the_loaderi(htno,code)
+    deta=Search_by_Roll_number.get_grade_start(htno,code)
     b=bool(deta[code])
     if(b==False):
         return HttpResponse("")
