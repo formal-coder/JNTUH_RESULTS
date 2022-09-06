@@ -2,12 +2,21 @@
 <html lang="en">
 
 <head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SM37HBH0FR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-SM37HBH0FR');
+</script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     
     <title>JNTUH RESULTS | All JNTUH Results at one place</title>
     <link rel="icon" href="https://jntuwing.in/wp-content/uploads/2022/02/71B14E20-F721-4482-B367-C06C9CF82633-e1645463061154.png">
-    <meta name="description" content="You can find the Results of your entire btech semesters here"/>
+    <meta name="description" content="You can find the Results of your entire B Tech semesters here of Jawaharlal Nehru Technological University, Hyderabad (JNTUH)."/>
     <meta name="keywords" content="jntuh results,jntuh btech results"/>
     <meta name="image" content="https://jntuh.ac.in/images/jntuhlogo.png"/>
     <style>
@@ -144,6 +153,11 @@
         {
             text-decoration:none; 
         }
+        @media screen and (max-width: 600px) {
+            img.results_icon {
+              display: none;
+            }
+          }
     </style>
 
     <script>
@@ -154,14 +168,15 @@
         }
         
         function validateForm() {
-  let x = document.forms["myForm"]["roll"].value;
+  let x = document.forms["Single"]["roll"].value;
   if (x.length<10) {
+    console.log(roll)
     alert("Enter the Correct Roll No");
     return false;
   }
 }
 function validateForm1() {
-  let x = document.forms["Fname"]["firsti"].value;
+  let x = document.forms["Fname"]["First_Roll"].value;
   if (x.length<8) {
     alert("Enter the first Eight digits of Roll Number");
     return false;
@@ -169,20 +184,20 @@ function validateForm1() {
 }
         
     </script>
+    
 </head>
 
 <body>
     <br>
     <nav>
         <a href="/">
-            <img src="https://jntuwing.in/wp-content/uploads/2022/02/71B14E20-F721-4482-B367-C06C9CF82633-e1645463061154.png" style="width:100px;" align="left">    
+            <img src="https://jntuwing.in/wp-content/uploads/2022/02/71B14E20-F721-4482-B367-C06C9CF82633-e1645463061154.png" style="width:100px;height:auto;" align="left">    
         </a>  
-        <a>
-            <img src="https://img.favpng.com/1/21/3/primary-election-voting-result-vote-counting-png-favpng-1t9nrk8EJjVT8ndE2aMEYZh4g.jpg" style="width:200px;" style="display: block;
+         <a href="http://results.jntuh.ac.in/"><img class="results_icon" src="https://i.ibb.co/P5JcRWR/133-1336637-one-of-areas-top-agents-selling-over-10-removebg-preview.png" alt="Results_Image" border="0" style="width:200px;" style="display: block;
             margin-left: auto;
             margin-right: auto;
-            width: 50%;">    
-        </a>    
+            width: 50%;" >    
+        </a>      
         <a href="https://github.com/ThilakReddyy/JNTUH_RESULTS" target="_blank">
             <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="github_logo" style="width:40px;height:40px;" align="right">
         </a>
@@ -192,15 +207,15 @@ function validateForm1() {
     <hr style="text-align:center ;width:75%">
     <div class="container">
         <div class="formsi">
-            <h2 class="center">Grades of All Classmates of Particular Semester</h2>
+            <h2 class="center">Grades of All Students of Particular Semester</h2>
             <br>
             <br>
-            <form method="post" name="Fname" action="/MultiRollNumber" id="form1" onsubmit="return validateForm1()">
+            <form method="post" name="Fname" action="/MultiRoll" id="form1" onsubmit="return validateForm1()">
                 {% csrf_token %}
                 <div style="text-align: center;">
-                    <input name="firsti" id="n1"  maxlength="8" placeholder="18***A0*" onkeyup=sync()
+                    <input name="First_Roll" id="n1"  maxlength="8" placeholder="18***A0*" onkeyup=sync()
                         oninput="this.value=this.value.toUpperCase()">
-                    <select name="first" id="first" class="dropdown" >
+                    <select name="First_Roll_Last_Digits" id="first" class="dropdown" >
 
                         {% for i,val in a_dic.items %}
                         {{i}}
@@ -208,8 +223,8 @@ function validateForm1() {
 
                         {% endfor %}
                     </select>
-                    <input name="lasti" id="n2" maxlength="8" placeholder="18***A0*" readonly style="margin-left:50px">
-                    <select name="last" id="last" class="dropdown" >
+                    <input name="Last_Roll" id="n2" maxlength="8" placeholder="18***A0*" readonly style="margin-left:50px">
+                    <select name="Last_Roll_Last_Digits" id="last" class="dropdown" >
 
                         {% for i,val in a_dic.items %}
                         {{i}}
@@ -217,6 +232,7 @@ function validateForm1() {
 
                         {% endfor %}
                     </select>
+                    <br>
                     <br>
                     <br>
                     <select name="code" id="code" >
@@ -240,12 +256,12 @@ function validateForm1() {
             
         <p style="text-align: center;">OR</p>
         <div class="formsi">
-            <h2 class="center">Grades of All Semester  of Particular Student</h2>    
+            <h2 class="center">Grades of All Semesters  of Particular Student</h2>    
             <br>
             <br>        
-                <form method="post" name="myForm" action="/SingleRollNumber" id="form2" style="text-align: center;" onsubmit="return validateForm()">
+                <form method="post" name="Single" action="/SingleRoll" id="form2" style="text-align: center;" onsubmit="return validateForm()">
                     {% csrf_token %}
-                    <input name="roll" id="roll" maxlength="10" placeholder="Enter Your Roll Number" style="width:15%;text-align: center;border-top-right-radius:7px;border-bottom-right-radius:7px">
+                    <input name="Roll" id="roll" maxlength="10" placeholder="Enter Your Roll Number" style="width:200px;text-align: center;border-top-right-radius:7px;border-bottom-right-radius:7px" oninput="this.value=this.value.toUpperCase()">
                     <br>
                     <br>
                     <div style="text-align: center;">
@@ -256,7 +272,7 @@ function validateForm1() {
         </div>
         <br>
         <small class="footerwarning">
-            It does not consider the RCRV Results
+            It does consider the RCRV Results
             <br>
         </small>
         <small class="footerwarning">
