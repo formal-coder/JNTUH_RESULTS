@@ -4,6 +4,8 @@ from asgiref.sync import sync_to_async
 from jntuhresults.Executables import Search_by_Roll_number
 from jntuhresults.Executables.constants import a_dic,Index_Keys
 import json
+import asyncio
+import aiohttp
 
 #Page Not Found Redirect
 def page_not_found_view(request, exception):
@@ -39,18 +41,20 @@ def gettingurl(request,htno,code):
     return render(request,'snippet.html',{'deta':deta}) if(bool(deta['Results'][code])) else HttpResponse("")
 listi=['1-1','1-2','2-1','2-2','3-1','3-2','4-1','4-2']
 
-def allResults_extend(htno):
+async def allResults_extend(htno):
     Results=Search_by_Roll_number.Results()
     deta={}
     deta['Results']={}
     print(deta)
-    for i in listi:
-        deta['Results'][i]=Results.get_grade_start(htno,i)['Results'][i]
-    del Results
-    return deta
+    async with aiohttp.ClientSession() as session:
+        for i in listi:
+            deta[i]= Results.get_grade_start(htno,i)['Results'][i]
+    del  Results
+    return  asyncio.gather(*deta)
 #API for getting all Results
-async def allResults(request):
+def allResults(request):
     htno=request.GET.get('htno').upper()
+    print("yes")    
     deta=allResults_extend(htno)
     return JsonResponse(deta)
 
